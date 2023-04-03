@@ -21,11 +21,6 @@ You can install these libraries using `pip` by running the following command:
 ```pip install pandas numpy scikit-learn matplotlib seaborn```
 
 
-## Notebooks
-
-There are several Jupyter notebooks included in this repository:
-
-
 ## Usage
 
 To use the trained model to make predictions on new data, you can run the `predict.py` script included in this repository. The script takes a CSV file as input, where each row represents a passenger and the columns correspond to the features used to train the model. The script outputs a CSV file with the predicted survival outcomes for each passenger.
