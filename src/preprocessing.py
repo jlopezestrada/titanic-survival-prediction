@@ -28,7 +28,7 @@ y = train_data['Survived']
 # X_test = test_data
 
 # Train split to personal score purposes
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=42)
 print(X_train.head())
 print(y_train.head())
 
