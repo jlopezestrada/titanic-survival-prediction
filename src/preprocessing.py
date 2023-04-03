@@ -1,6 +1,6 @@
 import pandas as pd
-import numpy as np
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 # Load dataset
 train_data = pd.read_csv('data/raw/train.csv', delimiter=',')
@@ -17,15 +17,23 @@ test_data[['Sex', 'Cabin', 'Embarked']] = test_data[['Sex', 'Cabin', 'Embarked']
 train_data = train_data.drop(columns=['Name', 'Ticket'])
 test_data = test_data.drop(columns=['Name', 'Ticket'])
 
+# Process empty or NaN values
+train_data = train_data.dropna()
+test_data = test_data.dropna()
+
 # Create X and Y subsets
-X_train = train_data.drop(columns=['Survived'])
-y_train = train_data['Survived']
-X_test = test_data
+# Entire dataset used for Kaggle Scoring
+X = train_data.drop(columns=['Survived'])
+y = train_data['Survived']
+# X_test = test_data
+
+# Train split to personal score purposes
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 print(X_train.head())
 print(y_train.head())
-print(X_test.head())
 
 # Save processed data
-X_train.to_csv('data/processed/X_train.csv')
-y_train.to_csv('data/processed/y_train.csv')
-X_test.to_csv('data/processed/X_test.csv')
+X_train.to_csv('data/processed/X_train.csv', index=False)
+X_test.to_csv('data/processed/X_test.csv', index=False)
+y_train.to_csv('data/processed/y_train.csv', index=False)
+y_test.to_csv('data/processed/y_test.csv', index=False)
