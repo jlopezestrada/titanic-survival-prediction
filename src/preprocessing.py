@@ -19,13 +19,13 @@ test_data = test_data.drop(columns=['Name', 'Ticket'])
 
 # Process empty or NaN values
 train_data = train_data.dropna()
-test_data = test_data.dropna()
+test_data = test_data.apply(lambda x: x.fillna(x.mean()), axis=0)
 
 # Create X and Y subsets
 # Entire dataset used for Kaggle Scoring
 X_train_full = train_data.drop(columns=['Survived'])
 y_train_full = train_data['Survived']
-# X_test = test_data
+test = test_data
 
 # Train split to personal score purposes
 X_train, X_test, y_train, y_test = train_test_split(X_train_full, y_train_full, test_size=0.8, random_state=42)
@@ -37,3 +37,4 @@ X_train.to_csv('data/processed/X_train.csv', index=False)
 X_test.to_csv('data/processed/X_test.csv', index=False)
 y_train.to_csv('data/processed/y_train.csv', index=False)
 y_test.to_csv('data/processed/y_test.csv', index=False)
+test.to_csv('data/processed/test.csv', index=False)
