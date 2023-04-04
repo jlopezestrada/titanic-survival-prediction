@@ -19,7 +19,9 @@ test_data = test_data.drop(columns=['Name', 'Ticket'])
 
 # Process empty or NaN values
 train_data = train_data.dropna()
-test_data = test_data.apply(lambda x: x.fillna(x.mean()), axis=0)
+# test_data = test_data.apply(lambda x: x.fillna(x.mean()), axis=0)
+# test_data = test_data.apply(lambda x: x.fillna(0), axis=0)
+test_data = test_data.apply(lambda x: x.fillna(x.median()), axis=0)
 
 # Create X and Y subsets
 # Entire dataset used for Kaggle Scoring
