@@ -1,3 +1,4 @@
+import itertools
 import pandas as pd
 import numpy as np
 import pickle
@@ -6,38 +7,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import KFold, RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV
 
 # Load processed data
 X_train = pd.read_csv('data/processed/X_train.csv', delimiter=',')
 X_test = pd.read_csv('data/processed/X_test.csv', delimiter=',')
 y_train = pd.read_csv('data/processed/y_train.csv', delimiter=',')
 y_test = pd.read_csv('data/processed/y_test.csv', delimiter=',')
-
-# rf_clf.fit(X_train, y_train.values.ravel())
-
-# k-NN Classifier
-# knn_clf = KNeighborsClassifier()
-# knn_clf.fit(X_train, y_train.values.ravel())
-
-# SVC Classifier
-# svc_clf = SVC()
-# svc_clf.fit(X_train, y_train.values.ravel())
-
-# MLP Classifier
-# mlp_clf = MLPClassifier()
-# mlp_clf.fit(X_train, y_train.values.ravel())
-
-# Decision Tree Classifier
-# dt_clf = DecisionTreeClassifier()
-# dt_clf.fit(X_train, y_train.values.ravel())
-
-# # Save the models
-# pickle.dump(rf_clf, open('models/RandomForest-clf-Titanic.joblib', 'wb'))
-# pickle.dump(knn_clf, open('models/kNN-clf-Titanic.joblib', 'wb'))
-# pickle.dump(svc_clf, open('models/SVC-clf-Titanic.joblib', 'wb'))
-# pickle.dump(mlp_clf, open('models/MLP-clf-Titanic.joblib', 'wb'))
-# pickle.dump(dt_clf, open('models/DT-clf-Titanic.joblib', 'wb'))
 
 # RandomizedSearchCV
 # Random Forest
@@ -51,6 +27,62 @@ rf_grid = {'n_estimators': np.arange(100, 1000, step=100),
 rf_random = RandomizedSearchCV(estimator=rf_clf, param_distributions=rf_grid, cv=8, n_iter=50, verbose=3, refit=True, n_jobs=-1)
 rf_random.fit(X_train, y_train.values.ravel())
 estimator = rf_random.best_estimator_
-print(estimator)
+print(rf_random.best_params_)
 print(estimator.score(X_test, y_test))
 pickle.dump(estimator, open('models/RandomForest-clf.joblib', 'wb'))
+
+# k-NN (k-Nearest-Neighbors)
+knn_clf = KNeighborsClassifier()
+
+knn_grid = {'n_neighbors': np.arange(2, 15),
+           'weights': ['uniform', 'distance'],
+           'algorithm': ['ball_tree', 'kd_tree', 'brute'],
+           'p': [1, 2]}
+knn_random = RandomizedSearchCV(estimator=knn_clf, param_distributions=knn_grid, cv=8, n_iter=5000, verbose=3, refit=True, n_jobs=-1)
+knn_random.fit(X_train, y_train.values.ravel())
+estimator = knn_random.best_estimator_
+print(knn_random.best_params_)
+print(estimator.score(X_test, y_test))
+pickle.dump(estimator, open('models/kNN-clf.joblib', 'wb'))
+
+# SVC (Support Vector Classification)
+svc_clf = SVC()
+
+svc_grid = {'C': np.arange(2, 10, 2),
+           'kernel': ['linear', 'poly'],
+           'degree': np.arange(3, 5),
+           'decision_function_shape': ['ovo', 'ovr']}
+svc_random = RandomizedSearchCV(estimator=svc_clf, param_distributions=svc_grid, cv=8, n_iter=20, verbose=3, n_jobs=-1, refit=True)
+svc_random.fit(X_train, y_train.values.ravel())
+estimator = svc_random.best_estimator_
+print(estimator)
+print(estimator.score(X_test, y_test))
+pickle.dump(estimator, open('models/SVC-clf.joblib', 'wb'))
+
+# MLP (Multi-Layer Perceptron)
+mlp_clf = MLPClassifier()
+
+mlp_grid = {'hidden_layer_sizes': [x for x in itertools.product((10,20,30,40,50,100),repeat=3)],
+           'activation': ['identity', 'logistic', 'tanh', 'relu'],
+           'solver': ['lbfgs', 'sgd', 'adam'],
+           'learning_rate': ['constant', 'invscaling', 'adaptive']}
+mlp_random = RandomizedSearchCV(estimator=mlp_clf, param_distributions=mlp_grid, cv=8, n_iter=50, verbose=3, refit=True, n_jobs=-1)
+mlp_random.fit(X_train, y_train.values.ravel())
+estimator = mlp_random.best_estimator_
+print(estimator)
+print(estimator.score(X_test, y_test))
+pickle.dump(estimator, open('models/MLP-clf.joblib', 'wb'))
+
+# Decision Tree
+dt_clf = DecisionTreeClassifier()
+
+dt_grid = {'criterion': ['gini', 'entropy'],
+           'splitter': ['best', 'random'],
+           'max_depth': np.arange(10, 50, step=10),
+           'max_features': ['auto', 'sqrt', 'log2', None]}
+dt_random = RandomizedSearchCV(estimator=dt_clf, param_distributions=dt_grid, cv=8, n_iter=5000, verbose=3, refit=True, n_jobs=-1)
+dt_random.fit(X_train, y_train.values.ravel())
+estimator = dt_random.best_estimator_
+print(estimator)
+print(estimator.score(X_test, y_test))
+pickle.dump(estimator, open('models/DT-clf.joblib', 'wb'))
