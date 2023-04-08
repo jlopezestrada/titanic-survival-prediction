@@ -30,9 +30,10 @@ y_train_full = train_data['Survived']
 test = test_data
 
 # Train split to personal score purposes
-X_train, X_test, y_train, y_test = train_test_split(X_train_full, y_train_full, test_size=0.8, random_state=42)
-print(X_train.head())
-print(y_train.head())
+X_train, X_test, y_train, y_test = train_test_split(X_train_full, y_train_full, test_size=0.2, random_state=42)
+print("X_train", X_train.shape)
+print("X_test", X_test.shape)
+# print(y_train.head())
 
 # Save processed data
 X_train.to_csv('data/processed/X_train.csv', index=False)
