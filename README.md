@@ -10,19 +10,24 @@ The dataset used for this project is the famous Titanic dataset, which includes 
 
 To run the code in this repository, you'll need to have Python 3 installed as well as the following libraries:
 
-- pandas
-- numpy
-- scikit-learn
-- matplotlib
+- Flask==2.2.3
+- matplotlib==3.5.2
+- numpy==1.24.2
+- pandas==2.0.0
+- scikit_learn==1.2.2
 
-You can install these libraries using `pip` by running the following command:
+You can install these libraries using `requirements.txt` by running the following command:
 
-```pip install pandas numpy scikit-learn matplotlib```
-
+```pip install -r requirements.txt```
 
 ## Usage
+### Command Line 
 
-To use the trained model to make predictions on new data, you can run the `eval.py` script included in this repository. 
+To use the trained model to make predictions on new data, you can run the `eval.py` script included in src.
+
+### Web Application
+
+To use the trained model to make predictions on new data using Flask web application, you can run the `app.py` script included in app.
 
 ## Conclusion
 
