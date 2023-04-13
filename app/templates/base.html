@@ -21,6 +21,9 @@
             </nav>
         </header>
         <main>
+            {% block information %}
+            {% endblock %}
+            <hr>
             {% block content %}
             {% endblock %}
         </main>
