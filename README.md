@@ -1,3 +1,7 @@
+![GitHub last commit](https://img.shields.io/github/last-commit/jlopezestrada/titanic-survival-prediction)
+![GitHub issues](https://img.shields.io/github/issues/jlopezestrada/titanic-survival-prediction)
+
+
 # Titanic Survival Prediction
 
 This repository contains a machine learning model that predicts the likelihood of survival for passengers on the Titanic. The model is trained on a dataset that includes various features such as age, sex, and ticket class. The goal of this project is to explore the factors that contributed to survival on the Titanic and to build a model that can accurately predict survival outcomes.
