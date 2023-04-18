@@ -2,25 +2,44 @@
 
 {% block title %}Survival Predictor: Machine Learning Model for Titanic Dataset{% endblock %}
 {% block information %}
-    <p>Pclass: Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd</p>
-    <p>Sex: 0 = Female, 1 = Male</p>
-    <p>Age: age in years</p>
-    <p>SibSp: # of siblings / spouses aboard the Titanic</p>
-    <p>Parch: # of parents / children aboard the Titanic</p>
-    <p>Fare: passenger fare in dollars $</p>
-    <p>Cabin: cabin number: 1-840</p>
-    <p>Port of Embarcation: 0 = Cherbourg, 1 = Queenstown, 2 = Southampton</p>
 {% endblock %}
 {% block content %}
     <form id="prediction_form" method="post" action="{{ url_for('predict') }}">
-        <label>Ticket Class <input type="number" min="1" , max="3", name="pclass", id="pclass"></label>
-        <label>Sex <input type="number" min="0" , max="1", name="sex", id="sex"></label>
-        <label>Age <input type="number" min="0" , max="100", name="age", id="age"></label>
-        <label>Number of siblings / spouses aboard the Titanic <input type="number" min="0", name="sibsp", id="sibsp"></label>
-        <label>Number of parents / children aboard the Titanic <input type="number" min="0", name="parch", id="parch"></label>
-        <label>Passenger fare ($) <input type="text", name="fare", id="fare"></label>       
-        <label>Cabin number <input type="number" min="1" , max="840", name="cabin", id="cabin"></label>
-        <label>Port of Embarcation <input type="number" min="0" , max="2", name="port", id="port"></label>
+        <label>Ticket Class 
+            <select required name="pclass", id="pclass">
+                <option value="1">First Class</option> 
+                <option value="2">Second Class</option> 
+                <option value="3">Third Class</option> 
+            </select>
+        </label>
+        <label>Sex 
+            <select required name="sex", id="sex">
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
+        </label>
+        <label>Age 
+            <input required type="number" min="0" , max="100", name="age", id="age">
+        </label>
+        <label>Number of siblings / spouses aboard the Titanic 
+            <input required type="number" min="0", name="sibsp", id="sibsp">
+        </label>
+        <label>Number of parents / children aboard the Titanic 
+            <input required type="number" min="0", name="parch", id="parch">
+        </label>
+        <label>Passenger fare ($) 
+            <input required type="text", name="fare", id="fare">
+        </label>       
+        <label>Cabin number (1-840) 
+            <input required type="number" min="1" , max="840", name="cabin", id="cabin">
+        </label>
+        <label>Port of Embarcation 
+            <select required name="port", id="port">
+                <option value="0">Cherbourg</option>        
+                <option value="1">Queenstown</option>
+                <option value="2">Southampton</option>
+            </select>
+        </label>
         <button type="submit">Predict</button>
     </form>
     <div class="prediction">

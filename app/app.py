@@ -11,7 +11,7 @@ def index():
 
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
-    data = {feature: int(request.form.get(feature)) for feature in request.form}
+    data = {feature: round(float(request.form.get(feature))) for feature in request.form}
     example_data = [329,3,0,31.0,1,1,20.525,147,2]
     captured_data = list(data.values())
     captured_data.insert(0, 1)
